@@ -18,7 +18,7 @@ curl -X POST 'http://localhost:9090/search' -d ‘카카오 뱅크’
 *키워드순 정렬 및 최다검색 순 10개에 대한 비즈니스로직을 서버에서 구현했습니다.
 
 ## [개발환경]
-- Spring boot+Mybatis. 
+- Spring boot+Mybatis 
 - JAVA 17  
 - Maven  
 - Oracle DB
