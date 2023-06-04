@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.SearchDao">
+	<select id = "selectListTop10" resultType = "Search"><![CDATA[
+		SELECT *
+		FROM(
+		SELECT keyword
+			  ,cnt
+		FROM SEARCH_HISTORY
+        /*order by cnt asc*/
+		)
+		/*where rownum <=10*/]]>
+	</select>
+	<select id = "selectKeyword" parameterType="map" resultType = "Search">
+		SELECT idx_tmp as idx
+			  ,keyword
+			  ,cnt
+			  ,count(*) as totalCnt
+		FROM SEARCH_HISTORY
+		WHERE keyword =#{keyword}
+		GROUP BY idx_tmp,keyword,cnt
+	</select>
+	<insert id="insertHist" parameterType="map">
+		INSERT INTO SEARCH_HISTORY(idx_tmp,keyword,cnt) VALUES (IDX_TMP.NEXTVAL,#{keyword},1)
+	</insert>
+	<update id="updateKeywordCnt" parameterType="map">
+		UPDATE SEARCH_HISTORY
+		SET cnt = #{Search.cnt}
+		WHERE keyword = #{Search.keyword}
+		AND idx_tmp = #{Search.idx}
+	</update>
+	<delete id="deletetHist" parameterType="map">
+		DELETE SEARCH_HISTORY WHERE keyword = #{keyword}
+	</delete>
+</mapper>
